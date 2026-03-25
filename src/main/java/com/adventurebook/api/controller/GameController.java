@@ -21,10 +21,10 @@ public class GameController {
 
     private final GameService gameService;
 
-    @PostMapping("/start/{bookId}")
+    @PostMapping("/start/{bookId}/player/{playerId}")
     public ResponseEntity<GameStateResponse> startGame(
         @PathVariable Long bookId,
-        @RequestParam Long playerId
+        @PathVariable Long playerId
     ) {
         return ResponseEntity
             .status(HttpStatus.CREATED)

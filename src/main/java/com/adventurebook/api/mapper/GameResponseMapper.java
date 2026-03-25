@@ -26,7 +26,6 @@ public class GameResponseMapper {
             && !section.getOptions().isEmpty()
             && session.isAlive()
             && !session.isFinished()
-            && !session.isPaused()
         ) {
             optionDtos = IntStream.range(0, section.getOptions().size())
                                   .mapToObj(i -> {

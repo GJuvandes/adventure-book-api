@@ -1,5 +1,8 @@
 package com.adventurebook.api.service;
 
+import java.time.Instant;
+import java.util.List;
+
 import com.adventurebook.api.dto.GameHistoryResponse;
 import com.adventurebook.api.dto.GameStateResponse;
 import com.adventurebook.api.dto.PlayerSessionsResponse;
@@ -21,9 +24,6 @@ import com.adventurebook.api.repository.GameSessionRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.time.Instant;
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -177,13 +177,11 @@ public class GameService {
     public GameStateResponse resumeGame(Long sessionId) {
         final GameSession session = findSession(sessionId);
 
-        if (!session.isPaused()) {
-            throw new GameOverException("Game is not paused.");
+        if (session.isPaused()) {
+            session.setPaused(false);
+            session.setLastPlayedAt(Instant.now());
+            gameSessionRepository.save(session);
         }
-
-        session.setPaused(false);
-        session.setLastPlayedAt(Instant.now());
-        gameSessionRepository.save(session);
 
         final Section currentSection = findSection(session);
         return gameResponseMapper.toGameStateResponse(session, currentSection, null);
