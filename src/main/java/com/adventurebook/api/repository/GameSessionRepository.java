@@ -10,7 +10,4 @@ import java.util.List;
 public interface GameSessionRepository extends JpaRepository<GameSession, Long> {
 
     List<GameSession> findByPlayerIdOrderByLastPlayedAtDesc(Long playerId);
-
-    List<GameSession> findByPlayerIdAndFinishedFalseAndAliveTrueOrderByLastPlayedAtDesc(Long playerId);
-
 }

@@ -11,7 +11,4 @@ import java.util.List;
 public interface ErrorLogRepository extends JpaRepository<ErrorLog, Long> {
 
     List<ErrorLog> findByTimestampAfterOrderByTimestampDesc(Instant after);
-
-    List<ErrorLog> findAllByOrderByTimestampDesc();
-
 }
